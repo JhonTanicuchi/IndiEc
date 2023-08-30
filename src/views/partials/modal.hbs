@@ -1,0 +1,49 @@
+<div x-data="{ isOpen: false }">
+    <div class="button">
+        {{> button}}
+    </div>
+
+    <div x-show="isOpen" x-transition:enter="transition duration-300 ease-out"
+        x-transition:enter-start="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+        x-transition:enter-end="translate-y-0 opacity-100 sm:scale-100"
+        x-transition:leave="transition duration-150 ease-in"
+        x-transition:leave-start="translate-y-0 opacity-100 sm:scale-100"
+        x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+        class="fixed inset-0 z-10 overflow-y-auto backdrop-blur-md	 bg-[#535a6650]" aria-labelledby="modal-title" role="dialog" aria-modal="true"
+        style="display: none;">
+
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div
+                class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl rtl:text-right dark:bg-gray-900 sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                <div>
+                    <div class="flex items-center justify-center">
+                        <div class="icon w-full h-full flex items-center justify-center">
+                            {{> icon}}
+                        </div>
+                    </div>
+
+                    <div class="mt-2 text-center">
+                        <h3 class="text-lg font-medium leading-6 text-gray-800 capitalize dark:text-white"
+                            id="modal-title">{{title}}</h3>
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                            {{description}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-5 sm:flex sm:items-center sm:justify-between">
+                    <button @click="isOpen = false" type="button"
+                        class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:mt-0 sm:w-auto sm:mx-2 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100">
+                        Cancel
+                    </button>
+
+                    <div class="buttonSuccess">
+                        {{> buttonSuccess}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

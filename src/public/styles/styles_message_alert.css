@@ -1,0 +1,35 @@
+.message_alert {
+    position: fixed;
+    bottom: 20px;
+    right: -500px;
+    z-index: 20;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: show 10s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    -webkit-animation: show 10s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.message_alert .close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+@keyframes show {
+    0% {
+        right: -500px;
+        opacity: 0;
+    }
+    15% {
+        right: 20px;
+        opacity: 1;
+    }
+    80% {
+        right: 20px;
+        opacity: 1;
+    }
+    100% {
+        right: -500px;
+        opacity: 0;
+    }
+}

@@ -1,0 +1,113 @@
+/* Aplica el estilo a la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: #111827;
+}
+
+/* Aplica el estilo a la barra de progreso */
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #202b39;
+}
+
+/* Oculta el botón de desplazamiento */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Oculta el botón de desplazamiento */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+
+
+
+.blur {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  backdrop-filter: blur(150px);
+
+}
+
+.container-animation {
+  position: absolute;
+  left: -360px;
+  top: -360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 10%;
+  animation: rotate 15s linear infinite;
+  -webkit-animation: rotate 15s linear infinite;
+}
+
+.container-animation2 {
+  position: absolute;
+  right: -360px;
+  bottom: -360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 20%;
+  animation: rotate 15s linear infinite;
+  -webkit-animation: rotate 15s linear infinite;
+}
+
+.animation {
+  position: relative;
+  width: 1000px;
+  height: 1000px;
+}
+
+
+.circle {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  animation: rotate 3s linear infinite;
+  -webkit-animation: rotate 3s linear infinite;
+}
+
+.circle1 {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  margin: auto;
+  bottom: 0%;
+  z-index: 2;
+  background: linear-gradient(to right, #111827, #ffffff);
+}
+
+.circle2 {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  z-index: 3;
+  background: linear-gradient(to right, #3b82f6, #ffffff);
+}
+
+.circle3 {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  z-index: 4;
+  background: linear-gradient(to right, #374151, #ffffff);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

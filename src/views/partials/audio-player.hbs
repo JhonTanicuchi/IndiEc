@@ -1,0 +1,28 @@
+{{#if User}}
+
+<!-- audio-player.hbs -->
+<div class="audio-player fixed bottom-0 left-0 w-full">
+  <audio class="custom-audio" preload="none">
+    <source src="{{file_path}}" type="audio/mpeg" />
+    Tu navegador no admite la reproducción de audio.
+  </audio>
+  <div class="custom-audio-controls">
+    <button class="play-pause-button">
+      <i class="fa-solid fa-backward-step"></i>
+    </button>
+
+     <button class="play-pause-button">
+      <i class="fa-solid fa-play"></i>
+    </button>
+
+     <button class="play-pause-button">
+      <i class="fa-solid fa-forward-step"></i>
+    </button>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress"></div>
+  </div>
+</div>
+
+{{/if}}

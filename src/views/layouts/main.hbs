@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{APP_NAME}}</title>
+    {{> head}}
+</head>
+
+<body class="bg-gray-800 overflow-hidden h-screen w-screen">
+
+    <div class="blur"></div>
+
+    <div class="container-animation">
+        <div class="animation">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+            <div class="circle circle3"></div>
+        </div>
+    </div>
+
+    <div class="container-animation2">
+        <div class="animation">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+            <div class="circle circle3"></div>
+        </div>
+    </div>
+
+    {{>sidebar}}
+
+    <div class="z-10 h-full overflow-y-auto {{#if User}}sm:ml-64 relative{{else}}ml-0 relative{{/if}}">
+        {{>loader}}
+        {{{body}}}
+        {{>message}}
+    </div>
+</body>
+{{>scripts}}
+
+</html>

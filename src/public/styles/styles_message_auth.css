@@ -1,0 +1,88 @@
+.section_message {
+  height: 42px;
+}
+
+.message_auth {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+.message_auth.hide {
+  animation: hide_auth 0.2s ease-in-out forwards;
+  -webkit-animation: hide_auth 0.2s ease-in-out forwards;
+}
+
+.message_auth div {
+  display: flex;
+  align-items: center;
+}
+
+.message_auth div i {
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.message_auth h1 {
+  font-size: 11px;
+  font-weight: normal;
+  color: white;
+}
+
+.message_auth i.fa-xmark {
+  opacity: 50%;
+}
+
+.message_auth i.fa-xmark:hover {
+  opacity: 100%;
+  cursor: pointer;
+}
+
+.message_auth.info {
+  background-color: #50b7d510;
+  border: 1px solid #50b7d5;
+}
+.message_auth.info h1,
+.message_auth.info i {
+  color: #50b7d5;
+}
+
+.message_auth.success {
+  background-color: #00bc8c10;
+  border: 1px solid #00bc8c;
+}
+.message_auth.success h1,
+.message_auth.success i {
+  color: #00bc8c;
+}
+
+.message_auth.error {
+  background-color: #e84c3d10;
+  border: 1px solid #e84c3d;
+}
+.message_auth.error h1,
+.message_auth.error i {
+  color: #e84c3d;
+}
+
+.message_auth.warning {
+  background-color: #f1c40f10;
+  border: 1px solid #f1c40f;
+}
+.message_auth.warning h1,
+.message_auth.warning i {
+  color: #f1c40f;
+}
+
+@keyframes hide_auth {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

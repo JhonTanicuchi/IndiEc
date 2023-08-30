@@ -1,0 +1,233 @@
+<section class="container px-10 mx-auto">
+  <div class="flex items-center justify-center">
+    <div class="flex items-center py-4 overflow-x-auto whitespace-nowrap">
+      <a href="/{{APP_NAME}}/dashboard" class="text-gray-600 dark:text-gray-500 text-sm">
+        <i class="fi fi-rr-house-blank"></i>
+      </a>
+
+      <span class="mx-2 text-gray-500 dark:text-gray-600 rtl:-scale-x-100">
+        <i class="fi fi-rr-angle-small-right flex items-center justify-center"></i>
+      </span>
+
+      <a href="/{{APP_NAME}}/songs/list" class="text-gray-600 dark:text-gray-500 text-sm hover:underline">
+        Canciones
+      </a>
+
+      <span class="mx-2 text-gray-500 dark:text-gray-600 rtl:-scale-x-100">
+        <i class="fi fi-rr-angle-small-right flex items-center justify-center"></i>
+      </span>
+
+      <a class="text-sm text-blue-600 dark:text-blue-400 hover:underline pointer-events-none">
+        Formulario
+      </a>
+    </div>
+  </div>
+
+
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">{{#if item}}Editar{{else}}Nueva{{/if}} canción
+        </h2>
+
+        <span
+          class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">Formulario</span>
+      </div>
+
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">La excelencia en la creación es para los valientes.
+        ¡Continúa forjando tu obra maestra!</p>
+    </div>
+  </div>
+
+
+  <form id="song_form" enctype="multipart/form-data"
+    action="/{{#if item}}{{APP_NAME}}/songs/{{item.id}}/update{{else}}{{APP_NAME}}/songs/create{{/if}}" method="POST">
+    <div class="p-6 dark:bg-gray-900/[.5] dark:text-gray-50 rounded-md mt-6 container flex flex-col mx-auto space-y-12">
+      <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-transparent]">
+        <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+
+          {{!-- Input de imagen de portada --}}
+          <div class="col-span-full sm:col-span-2 sm:row-span-3">
+            <div class="flex items-center justify-center w-full relative">
+              <div id="song_image_preview" class="absolute w-full h-full rounded-lg overflow-hidden">
+                <img class="w-full h-full object-cover" src="/upload/imgs/songs/{{item.cover_path}}"
+                  alt="{{item.cover_path}}" />
+              </div>
+              <label for="song_image_file"
+                class="z-10 flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:hover:border-gray-500 dark:bg-gray-700/[.8] dark:hover:bg-gray-600/[.8]">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                  </svg>
+                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">{{#if item}}Actualiza la{{else}}Selecciona
+                    una{{/if}} imagen de portada</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG o GIF</p>
+                </div>
+                <input id="song_image_file" name="song_image_file" type="file" class="hidden"
+                  accept=".jpg, .png, .jpeg" />
+              </label>
+            </div>
+          </div>
+
+          {{!-- Input del titulo --}}
+          <div class="col-span-full sm:col-span-4">
+            <label for="title" class="block text-sm text-gray-500 dark:text-gray-300">Título</label>
+            <input id="title" name="title" type="text" placeholder="" value="{{item.title}}"
+              class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300" />
+          </div>
+
+          {{!-- Input de genero --}}
+          <div class="col-span-full sm:col-span-2">
+            <label for="genre" class="block text-sm text-gray-500 dark:text-gray-300">Selecciona un género</label>
+            <select id="genre" name="genre"
+              class="block mt-2 w-full rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300">
+              <option disabled selected>Género</option>
+              <option value="pop" {{selectedIfEquals item.genre 'pop' }}>Pop</option>
+              <option value="rock" {{selectedIfEquals item.genre 'rock' }}>Rock</option>
+              <option value="hip-hop" {{selectedIfEquals item.genre 'hip-hop' }}>Hip Hop</option>
+              <option value="electrónico" {{selectedIfEquals item.genre 'electrónico' }}>Electrónico</option>
+              <option value="jazz" {{selectedIfEquals item.genre 'jazz' }}>Jazz</option>
+              <option value="clásico" {{selectedIfEquals item.genre 'clásico' }}>Clásico</option>
+              <option value="country" {{selectedIfEquals item.genre 'country' }}>Country</option>
+              <option value="reggae" {{selectedIfEquals item.genre 'reggae' }}>Reggae</option>
+              <option value="blues" {{selectedIfEquals item.genre 'blues' }}>Blues</option>
+              <option value="folk" {{selectedIfEquals item.genre 'folk' }}>Folk</option>
+              <option value="latino" {{selectedIfEquals item.genre 'latino' }}>Latino</option>
+              <option value="metal" {{selectedIfEquals item.genre 'metal' }}>Metal</option>
+              <option value="punk" {{selectedIfEquals item.genre 'punk' }}>Punk</option>
+              <option value="r&b" {{selectedIfEquals item.genre 'r&b' }}>R&B</option>
+              <option value="indie" {{selectedIfEquals item.genre 'indie' }}>Indie</option>
+              <option value="alternativo" {{selectedIfEquals item.genre 'alternativo' }}>Alternativo</option>
+              <option value="soul" {{selectedIfEquals item.genre 'soul' }}>Soul</option>
+              <option value="funk" {{selectedIfEquals item.genre 'funk' }}>Funk</option>
+              <option value="baile" {{selectedIfEquals item.genre 'baile' }}>Baile</option>
+              <option value="reguetón" {{selectedIfEquals item.genre 'reguetón' }}>Reguetón</option>
+              <option value="rap" {{selectedIfEquals item.genre 'rap' }}>Rap</option>
+              <option value="tecnocumbia" {{selectedIfEquals item.genre 'tecnocumbia' }}>Tecnocumbia</option>
+              <option value="ska" {{selectedIfEquals item.genre 'ska' }}>Ska</option>
+            </select>
+          </div>
+
+          {{!-- Input de fecha de lanzamiento --}}
+          <div class="col-span-full sm:col-span-2">
+            <label for="release_date" class="block text-sm text-gray-500 dark:text-gray-300">Fecha de
+              lanzamiento</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                </svg>
+              </div>
+              <input id="release_date" name="release_date" datepicker datepicker-format="yyyy-mm-dd" datepicker-autohide
+                type="text"
+                class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white pl-10 p-2.5 text-gray-700 focus:outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300"
+                placeholder="Select date" value="{{item.release_date}}">
+            </div>
+          </div>
+
+          {{!-- Input de la canción --}}
+          <div class="col-span-full sm:col-span-4">
+            <label for="song_file" class="block text-sm text-gray-500 dark:text-gray-300">Canción</label>
+            <label for="song_file"
+              class="flex items-center px-3 py-3 mt-2 mx-auto text-center bg-white border-2 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-900">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+
+              <h2 class="mx-3 text-gray-400">Selecciona tu canción MP3 o WAV</h2>
+
+              <input id="song_file" name="song_file" type="file" class="hidden" accept=".mp3, .wav" />
+            </label>
+          </div>
+
+          <div class="flex items-center col-span-full sm:col-span-6 mt-2">
+            <input id="is_published" name="is_published" type="checkbox" {{#if item.is_published}} checked {{/if}}
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-none cursor-pointer dark:bg-gray-700 dark:border-gray-600">
+            <label for="is_published" class="ml-2 text-sm font-normal text-gray-900 dark:text-gray-500">¿Deseas <span
+                class="text-blue-600 dark:text-blue-500/[.5] font-medium">publicar</span> tu canción al momento de {{#if
+              item}}actualizar{{else}}guardar{{/if}}?</label>
+          </div>
+
+        </div>
+
+        <div class="space-y-2 col-span-full lg:col-span-1 border-l-[1px] border-gray-800 text-right pl-2">
+          <p class="font-medium">Detalles de la Canción</p>
+          <p class="text-xs text-gray-500">Completa los campos a continuación para subir tu canción y compartir tu
+            música con el mundo.</p>
+        </div>
+
+      </fieldset>
+    </div>
+
+    <div class="sm:flex sm:items-center sm:justify-between mt-6">
+      <div class="flex items-center justify-center gap-4">
+        <a href="/{{APP_NAME}}/songs/list">
+          <button type="button"
+            class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-gray-500 capitalize transition-colors duration-300 transform border border-gray-500 rounded-md sm:w-auto sm:mt-0 hover:text-white hover:bg-gray-500 hover:border-gray-500">
+            Cancelar
+          </button>
+
+        </a>
+
+
+        {{#if item}}
+        {{#> modal title="Eliminar Permanentemente" description="Estas seguro de eliminar esta canción."}}
+
+        {{#*inline "icon"}}
+        <img src="/imgs/trash.png" class="w-10 h-10">
+        {{/inline}}
+
+        {{#*inline "button"}}
+        <button type="button" @click="isOpen = true"
+          class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-red-500 capitalize transition-colors duration-300 transform border border-red-500 rounded-md sm:w-auto sm:mt-0 hover:text-white hover:bg-red-500 hover:border-red-500">
+          Eliminar
+        </button>
+
+        {{/inline}}
+
+        {{#*inline "buttonSuccess"}}
+        <a href="/{{APP_NAME}}/songs/{{item.id}}/delete">
+          <button type="button"
+            class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-red-500 capitalize transition-colors duration-300 transform border border-red-500 rounded-md sm:w-auto sm:mt-0 hover:text-white hover:bg-red-500 hover:border-red-500">
+            Eliminar
+          </button>
+        </a>
+        {{/inline}}
+
+        {{/modal}}
+        {{/if}}
+      </div>
+
+      <button type="submit"
+        class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:w-auto sm:mt-0 hover:bg-blue-500">
+        {{#if item}}Actualizar{{else}}Subir{{/if}}
+      </button>
+
+    </div>
+
+
+  </form>
+</section>
+
+<script>
+  $(document).ready(function () {
+    $('#song_image_file').on('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          $('#song_image_preview img').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+</script>

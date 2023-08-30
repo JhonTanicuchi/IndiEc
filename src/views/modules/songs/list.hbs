@@ -1,0 +1,483 @@
+<section class="container px-10 mx-auto h-full	">
+  <div class="flex items-center justify-center">
+    <div class="flex items-center py-4 overflow-x-auto whitespace-nowrap">
+      <a href="/{{APP_NAME}}/dashboard" class="text-gray-600 dark:text-gray-500 text-sm">
+        <i class="fi fi-rr-house-blank"></i>
+      </a>
+
+      <span class="mx-2 text-gray-500 dark:text-gray-600 rtl:-scale-x-100">
+        <i class="fi fi-rr-angle-small-right flex items-center justify-center"></i>
+      </span>
+
+      <a href="/{{APP_NAME}}/songs/list" class="text-gray-600 dark:text-gray-500 text-sm hover:underline">
+        Canciones
+      </a>
+
+      <span class="mx-2 text-gray-500 dark:text-gray-600 rtl:-scale-x-100">
+        <i class="fi fi-rr-angle-small-right flex items-center justify-center"></i>
+      </span>
+
+      <a class="text-sm text-blue-600 dark:text-blue-400 pointer-events-none">
+        {{#if (compare filter "==" "public")}}
+        Públicos
+        {{/if}}
+        {{#if (compare filter "==" "private")}}
+        Privados
+        {{/if}}
+        {{#if (compare filter "==" "all")}}
+        Todos
+        {{/if}}
+        {{#unless filter}}
+        Todos
+        {{/unless}}
+      </a>
+    </div>
+  </div>
+
+
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div>
+      <div class="flex items-center gap-x-3">
+        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Canciones</h2>
+        <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
+          {{totalCount}} {{pluralize totalCount 'canción' 'canciones'}}
+        </span>
+      </div>
+
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">Visualiza tus creaciones e impulsa la innovación. ¡Crea
+        sin límites!</p>
+    </div>
+
+    <div class="flex items-center mt-4 gap-x-3">
+      <a href="/{{APP_NAME}}/songs/form">
+        <button
+          class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <i class="fi fi-rr-add flex items-center justify-center"></i>
+          <span>Subir</span>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="mt-6 md:flex md:items-center md:justify-between">
+    <div
+      class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
+      <a href="/{{APP_NAME}}/songs/list?filter=all" class="{{#if (compare filter "==" "
+        all")}}dark:bg-gray-800{{/if}}{{#unless filter}}dark:bg-gray-800{{/unless}} px-5 py-2 text-xs font-medium
+        text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300">
+        Todos
+      </a>
+
+      <a href="/{{APP_NAME}}/songs/list?filter=public" class="{{#if (compare filter "==" "
+        public")}}dark:bg-gray-800{{/if}} px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200
+        sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+        Públicos
+      </a>
+
+      <a href="/{{APP_NAME}}/songs/list?filter=private" class="{{#if (compare filter "==" "
+        private")}}dark:bg-gray-800{{/if}} px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200
+        sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+        Privados
+      </a>
+    </div>
+
+
+    <form action="/{{APP_NAME}}/songs/list" method="get">
+      <div class="flex items-center gap-2">
+        <div class="relative flex items-center mt-4 md:mt-0">
+          <span class="absolute">
+            <i class="fi fi-rr-search w-5 h-5 mx-3 text-gray-400 dark:text-gray-600"></i>
+          </span>
+          <input type="text" name="search" placeholder="Buscar"
+            class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none">
+        </div>
+
+
+        <button type="submit"
+          class="w-full px-3 py-2 text-sm font-medium tracking-wide text-gray-500 bg-gray-600 capitalize transition-colors duration-300 transform border border-gray-500 rounded-md sm:w-auto sm:mt-0 hover:text-white hover:border-gray-500">
+          <i class="fi fi-rr-search text-gray-400 dark:text-gray-900"></i>
+
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  {{#if list}}
+
+  <div
+    class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6 border h-[calc(100%-250px)]	 dark:border-gray-700 bg-gray-900/[.5]">
+    <table class="w-full text-sm text-left text-gray-500/[.5] dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700/[.5] dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-4 py-3">
+            #
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Título
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Género
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Álbum
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Estado
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Reproducciones
+          </th>
+          <th scope="col" class="px-6 py-3">
+            <i class="fa-regular fa-clock"></i>
+          </th>
+          <th scope="col" class="px-6 py-3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each list}}
+        <tr id="{{id}}"
+          class="row_song bg-white border-b dark:bg-gray-800/[.7] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900">
+          <td class="index play_{{id}}">
+            {{!-- <div class="flex justify-center">{{math @index "+" 1}}</div>--}}
+
+            <div class="flex justify-center"> <i id="icon_song_{{id}}" class="fa-solid fa-play cursor-pointer"
+              onclick="playAudio('/upload/songs/{{song_path}}')"></i></div>
+
+            <audio class="song" preload="none" hidden>
+              <source src="/upload/songs/{{song_path}}" type="audio/mpeg" />
+              Tu navegador no admite la reproducción de audio.
+            </audio>
+
+          </td>
+          <td scope="row" class="flex items-center px-6 py-3 text-gray-900 whitespace-nowrap dark:text-white">
+            <div class="avatar">
+              <div class="w-10 mask mask-squircle">
+                <img src="/upload/imgs/songs/{{cover_path}}" />
+              </div>
+            </div>
+            <div class="pl-3">
+              <div class="text-base truncate w-60 ">{{formatText title "capital"}}</div>
+              <div class="font-normal text-gray-500">{{firstNamesAndSurnames
+                artist.person.names artist.person.surnames}}</div>
+            </div>
+          </td>
+          <td class="px-6 py-3">
+            {{formatText genre "capital"}}
+          </td>
+          <td class="px-6 py-3">
+            {{#if album}}
+            {{this}}
+            {{else}}
+            --
+            {{/if}}
+          </td>
+          <td class="px-6 py-3">
+            <div class="flex items-center">
+              {{#if is_published}}
+              <i class="fi fi-rr-unlock mr-1 text-blue-600/[.7] flex items-center justify-center"></i>
+              Público
+              {{else}}
+              <i class="fi fi-rr-lock mr-1 text-gray-400 flex items-center justify-center"></i>
+              Privado
+              {{/if}}
+            </div>
+          </td>
+          <td class="px-6 py-3">
+            <div class="flex items-center">
+              <i class="fa-regular fa-eye mr-1 text-blue-600/[.7]"></i>
+              {{play_count}}
+            </div>
+          </td>
+          <td class="px-6 py-3">
+            --
+          </td>
+          <td class="px-6 py-3">
+            <div class="relative">
+              <div class="btn-submenu w-6 h-6 flex items-center justify-center rounded-full bg-gray-700 cursor-pointer">
+                <i class="fa-solid fa-ellipsis"></i>
+              </div>
+
+              <div class="submenu w-36 rounded-md bg-gray-700 overflow-hidden absolute top-0 right-0 hidden z-20">
+                <ul>
+                  <li class="px-3 py-2 hover:bg-gray-800">
+                    {{#if is_published}}
+                    <a href="/{{../APP_NAME}}/songs/{{id}}/unpublish">
+                      <div class="flex items-center">
+                        <i class="fa-solid fa-ban mr-2"></i>
+                        Hacer privado
+                      </div>
+                    </a>
+                    {{else}}
+                    <a href="/{{../APP_NAME}}/songs/{{id}}/publish">
+                      <div class="flex items-center">
+                        <i class="fa-regular fa-share-from-square mr-2"></i>
+                        Hacer público
+                      </div>
+                    </a>
+                    {{/if}}
+                  </li>
+                  <li class="px-3 py-2 hover:bg-gray-800">
+                    <a href="/{{../APP_NAME}}/songs/{{id}}/form">
+                      <div class="flex items-center">
+                        <i class="fa-regular fa-pen-to-square mr-2"></i>
+                        Editar
+                      </div>
+                    </a>
+                  </li>
+                  {{#> modal icon="" title="Eliminar Permanentemente" description="Estas seguro de eliminar esta
+                  canción."}}
+
+                  {{#*inline "icon"}}
+                  <img src="/imgs/trash.png" class="w-10 h-10">
+                  {{/inline}}
+
+                  {{#*inline "button"}}
+                  <li @click="isOpen = true" class="px-3 py-2 hover:bg-gray-800 cursor-pointer">
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-trash-can mr-2"></i>
+                      Eliminar
+                    </div>
+                  </li>
+                  {{/inline}}
+
+                  {{#*inline "buttonSuccess"}}
+                  <a href="/{{../../APP_NAME}}/songs/{{id}}/delete">
+                    <button type="button"
+                      class="w-full px-4 py-2 mt-2 text-sm font-medium tracking-wide text-red-500 capitalize transition-colors duration-300 transform border border-red-500 rounded-md sm:w-auto sm:mt-0 hover:text-white hover:bg-red-500 hover:border-red-500">
+                      Eliminar
+                    </button>
+                  </a>
+                  {{/inline}}
+
+                  {{/modal}}
+
+
+                </ul>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{else}}
+
+  <div
+    class="flex items-center mt-6 text-center border dark:bg-gray-800/[.7] rounded-lg h-[calc(100%-250px)] dark:border-gray-700">
+    <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
+      <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full dark:bg-gray-800">
+        <i class="fi fi-rr-search w-10 h-10"></i>
+      </div>
+      <h1 class="mt-3 text-lg text-gray-800 dark:text-white">No se encontraron canciones</h1>
+      <p class="mt-2 text-gray-500 dark:text-gray-400">Su búsqueda no coincide con ningúna canción. Inténtalo de nuevo
+      </p>
+      <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
+        <a href="/{{APP_NAME}}/songs/list">
+          <button
+            class="w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
+            Limpiar busqueda
+          </button>
+        </a>
+        <a href="/{{APP_NAME}}/songs/form">
+          <button
+            class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+            <i class="fi fi-rr-add flex items-center justify-center w-5 h-5"></i>
+            <span>Subir</span>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {{/if}}
+</section>
+
+
+
+
+<div class="preview-audio-player dark:bg-gray-900 rounded-lg fixed bottom-0 left-64 right-0 py-3 px-10 m-2 mx-4 flex items-center justifi-center flex-col">
+
+  <audio id="audioPlayer" preload="none" controls="true" hidden>
+    <source src="" type="audio/mpeg" />
+    Tu navegador no admite la reproducción de audio.
+  </audio>
+
+  <div class="controls flex items-center gap-2">
+    <button class="control-button hover:scale-105" id="prevButton"><i class="fi fi-rr-rewind"></i></button>
+    <button class="control-button hover:scale-105" id="playButton"><i class="fi fi-rr-play"></i></button>
+    <button class="control-button hover:scale-105" id="nextButton"><i class="fi fi-rr-forward"></i></button>
+  </div>
+
+  <div class="progress-container flex items-center w-full">
+
+    <span id="currentTime" class="text-xs">0:00</span>
+
+    <input id="progressBar" type="range" disabled
+      class="w-full h-1 mx-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="100"
+      step="0.1" value="0">
+
+    <span id="totalDuration" class="text-xs">0:00</span>
+  </div>
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+  var currentPlayingIcon = '<i id="icon_song_{{id}}" class="fa-solid fa-spinner animate-spin"></i>'
+  var defaultIconContent = '<i id="icon_song_{{id}}" class="fa-solid fa-play cursor-pointer" onclick="playAudio({{id}}, {{song_path}})"></i>';
+  var playingIconContent = '<i id="icon_song_{{id}}" class="fa-solid fa-pause cursor-pointer" onclick="pauseAudio(this)"></i>';
+
+  var songs = []; // Crear un arreglo para almacenar las rutas de los audios
+
+  $(document).ready(function () {
+
+
+    $(".song").each(function () {
+      var audioSource = $(this).find("source").attr("src"); // Obtener la ruta del archivo de audio
+      songs.push(audioSource); // Agregar la ruta al arreglo de canciones
+    });
+
+
+
+    //--------------------------
+    $('.btn-submenu').on('click', function (e) {
+      var $submenu = $(this).closest('.relative').find('.submenu');
+      $('.submenu').not($submenu).hide();
+      $submenu.toggle();
+      e.stopPropagation();
+    });
+
+    $(document).on('click', function (e) {
+      if (!$(e.target).closest('.btn-submenu').length && !$(e.target).closest('.submenu').length) {
+        $('.submenu').hide();
+      }
+    });
+
+    $('.submenu').on('click', function (e) {
+      e.stopPropagation();
+    });
+
+  });
+
+
+  function playAudio(pathOrIndex) {
+    var startingIndex = -1;
+
+    if (typeof pathOrIndex === "string") {
+      startingIndex = songs.indexOf(pathOrIndex);
+    } else if (typeof pathOrIndex === "number") {
+      startingIndex = pathOrIndex;
+    }
+
+    if (startingIndex !== -1) {
+      var audioPlayer = document.getElementById("audioPlayer");
+      audioPlayer.src = songs[startingIndex];
+      audioPlayer.load();
+      audioPlayer.play();
+
+      audioPlayer.onended = function () {
+        var nextIndex = startingIndex + 1;
+        if (nextIndex < songs.length) {
+          audioPlayer.src = songs[nextIndex];
+          audioPlayer.load();
+          audioPlayer.play();
+          startingIndex = nextIndex;
+        } else {
+          // No hay más canciones en la lista
+          audioPlayer.src = "";
+          startingIndex = -1;
+        }
+      };
+    }
+  }
+
+
+
+  const audioPlayer = document.getElementById("audioPlayer");
+  const progressBar = document.getElementById("progressBar");
+  const playButton = document.getElementById("playButton");
+  const prevButton = document.getElementById("prevButton");
+  const nextButton = document.getElementById("nextButton");
+  const currentTimeElement = document.getElementById("currentTime");
+  const totalDurationElement = document.getElementById("totalDuration");
+
+  let currentSongIndex = -1;
+  let isPlaying = false;
+
+  function updateProgressBar() {
+    const currentTime = audioPlayer.currentTime;
+    const duration = audioPlayer.duration;
+    progressBar.value = (currentTime / duration) * 100;
+
+    const formattedCurrentTime = formatTime(currentTime);
+    const formattedDuration = formatTime(duration);
+    currentTimeElement.textContent = formattedCurrentTime;
+    totalDurationElement.textContent = formattedDuration;
+  }
+
+  function formatTime(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+
+  audioPlayer.addEventListener("timeupdate", updateProgressBar);
+
+  playButton.addEventListener("click", function () {
+    if (isPlaying) {
+      audioPlayer.pause();
+      playButton.innerHTML = "<i class='fi fi-rr-play'></i>";
+      progressBar.disabled = true;
+    } else {
+      audioPlayer.play();
+      playButton.innerHTML = "<i class='fi fi-rr-play-pause'></i>";
+      progressBar.disabled = false; 
+    }
+
+    isPlaying = !isPlaying;
+  });
+
+  prevButton.addEventListener("click", function () {
+    currentSongIndex = Math.max(0, currentSongIndex - 1);
+    playAudio(currentSongIndex);
+  });
+
+  nextButton.addEventListener("click", function () {
+    currentSongIndex = Math.min(songs.length - 1, currentSongIndex + 1);
+    playAudio(currentSongIndex);
+  });
+
+
+  progressBar.addEventListener("input", function () {
+    const newTime = (progressBar.value / 100) * audioPlayer.duration;
+    audioPlayer.currentTime = newTime;
+  });
+
+  audioPlayer.addEventListener("ended", function () {
+    currentSongIndex = Math.min(songs.length - 1, currentSongIndex + 1);
+    playAudio(currentSongIndex);
+  });
+
+  audioPlayer.addEventListener("play", function () {
+  progressBar.disabled = false;
+});
+
+audioPlayer.addEventListener("pause", function () {
+  progressBar.disabled = true; // Deshabilitar la barra de progreso al pausar la reproducción
+});
+
+
+
+  function pauseAudio(element) { }
+
+</script>
